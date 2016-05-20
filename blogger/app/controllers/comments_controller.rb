@@ -8,6 +8,14 @@ class CommentsController < ApplicationController
     redirect_to article_path(@comment.article)
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    article = @comment.article
+    @comment.destroy
+    flash.notice = "Your comment has been deleted!"
+    redirect_to article_path(article)
+  end
+
   private
     def comment_params
       params.require(:comment).permit(:author_name, :body)

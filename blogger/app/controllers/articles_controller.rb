@@ -17,7 +17,6 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
-    flash.notice = "Article '#{@article.title}' Edited!"
   end
 
   def update
