@@ -1,13 +1,22 @@
 <h1><%= @article.title %></h1>
+<h2>by &nbsp;<%= @article.author %></h2>
+<h4><%= pluralize(@article.view_count,'view') %></h4>
 <p>
   Tags:
   <% @article.tags.each do |tag| %>
     <%= link_to tag.name, tag_path(tag) %>
   <% end %>
 </p><br>
+<p><% if @article.image.exists? %>
+   <%= image_tag @article.image.url %>
+   <% end %></p>
 <p><%= @article.body %></p><br>
-<%= link_to "edit", edit_article_path(@article) %>
-<%= link_to "delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %><br>
+<% if logged_in? %>
+  <%if @current_user.email.eql? @article.email %>
+    <%= link_to "edit", edit_article_path(@article) %>
+    <%= link_to "delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %><br>
+  <% end %>
+<% end %>
 <%= link_to "<< Back to Articles List", articles_path %>
 
 <%= render "comments/form" %>
